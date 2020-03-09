@@ -28,9 +28,9 @@
             Currency Price Index 
         </h1>
         <h5>by Obas</h5>        
-        <h5 style="font-weight: bold;">{{base.date}}</h5>
+        <h5 style="font-weight: bold;">{{info.date}}</h5>
         <h6>Source: api.exchangerateapi.io/latest</h6>
-        <h2 style="font-weight: bold;" >Base Currency: {{ base.base }}</h2>
+        <h2 style="font-weight: bold;" >Base Currency: {{ info.base }}</h2>
 
         <table  class="table table-striped table-dark">
             <thead>
@@ -40,7 +40,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(currency, numb) in info">
+              <tr v-for="(currency, numb) in rates">
                 <th>{{ numb }}</th>
                 <td>{{currency}}</td>
               </tr>
@@ -56,16 +56,16 @@
             el: '#app',
             data() {
                 return {
+                rates: null,
                 info: null,
-                base: null,
             }
         },
         mounted (){
             axios
             .get('https://api.exchangeratesapi.io/latest')
             .then((response) => {
-              this.info = response.data.rates
-              this.base = response.data
+              this.rates = response.data.rates
+              this.info = response.data
             })
 
         }
